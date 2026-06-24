@@ -19,7 +19,7 @@ export const projects: Project[] = [
   },
   {
     title: "Ciceron",
-    description: "Sistema RAG Agentico para el apoyo en la creacion de discursos y oratoria, permite crear discursos o mejorarlos basado en información de expertos mediante un MCP",
+    description: "Sistema RAG Agentico para el apoyo en la creación de discursos y oratoria, permite crearlos o mejorarlos basado en información de expertos mediante un MCP. Presente en todo el flujo, desde la extración de información, vecotorización y consumo mediante un Agente.",
     tags: ["Python", "MCP", "Go", "Google Cloud", "Agente", "Qdrant", "Embeddings", "Docker"],
     githubUrl: "https://github.com/soyisuss/ciceron",
     status: "in-progress"
