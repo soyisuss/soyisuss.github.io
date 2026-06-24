@@ -1,0 +1,142 @@
+---
+import SolutionCard from "./SolutionCard.astro";
+---
+
+<section id="soluciones" class="solutions-section">
+  <h2 class="section-title">Enfoque</h2>
+  <div class="solutions-grid">
+    <!-- Card 1: Agentes de IA -->
+    <SolutionCard
+      title="Agentes de IA y Automatización"
+      description="Diseño de flujos de trabajo autónomos basados en agentes que toman decisiones dinámicas y ejecutan tareas complejas de principio a fin."
+    >
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path
+          d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-4.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2Z"
+        ></path><path
+          d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-4.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2Z"
+        ></path></svg
+      >
+    </SolutionCard>
+
+    <!-- Card 2: RAG -->
+    <SolutionCard
+      title="RAG y Búsqueda Semántica"
+      description="Conexión segura de modelos de lenguaje con bases de conocimiento privadas para responder consultas con alta precisión y contexto."
+    >
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"
+        ></path><path d="M8 11h6"></path><path d="M11 8v6"></path></svg
+      >
+    </SolutionCard>
+
+    <!-- Card 3: Visión Artificial -->
+    <SolutionCard
+      title="Visión Artificial"
+      description="Procesamiento inteligente de imágenes, detección de objetos y extracción estructurada de información visual."
+    >
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path
+          d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"
+        ></path><circle cx="12" cy="12" r="3"></circle></svg
+      >
+    </SolutionCard>
+
+    <!-- Card 4: Despliegue & MLOps -->
+    <SolutionCard
+      title="Despliegue y MLOps"
+      description="Puesta en producción y empaquetado de modelos sobre infraestructura en la nube, asegurando endpoints estables y escalables."
+    >
+      <svg
+        slot="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path><path
+          d="M8 16h.01"></path><path d="M8 20h.01"></path><path d="M12 18h.01"
+        ></path><path d="M12 22h.01"></path><path d="M16 16h.01"></path><path
+          d="M16 20h.01"></path></svg
+      >
+    </SolutionCard>
+  </div>
+</section>
+
+<style>
+  .solutions-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+
+  .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--accent-violet);
+    border-radius: 99px;
+  }
+
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 600px) {
+    .solutions-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .solutions-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

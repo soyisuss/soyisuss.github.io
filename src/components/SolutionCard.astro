@@ -1,0 +1,68 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<div class="solution-card">
+  <div class="card-icon">
+    <slot name="icon" />
+  </div>
+  <h3 class="card-title">{title}</h3>
+  <p class="card-desc">
+    {description}
+  </p>
+</div>
+
+<style>
+  .solution-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(10px);
+  }
+
+  .solution-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent-violet);
+    box-shadow: 0 12px 30px var(--accent-violet-glow);
+  }
+
+  .card-icon {
+    color: var(--accent-violet);
+    background: rgba(139, 92, 246, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .solution-card:hover .card-icon {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: var(--accent-violet);
+    transform: scale(1.05);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .card-desc {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+</style>

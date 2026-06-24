@@ -1,0 +1,76 @@
+---
+
+---
+
+<header class="navbar">
+  <div class="navbar-container">
+    <a href="#" class="nav-logo">
+      <img src="/logo.svg" alt="Yael Caballero" class="logo-image" />
+    </a>
+    <nav class="nav-menu">
+      <a href="#inicio" class="nav-link">Inicio</a>
+      <a href="#proyectos" class="nav-link">Proyectos</a>
+      <a href="#tecnologias" class="nav-link">Tecnologías</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-image {
+    height: 55px;
+    width: 55px; /* Explicit width to prevent collapse */
+    display: block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .logo-image:hover {
+    transform: scale(1.08);
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+</style>
