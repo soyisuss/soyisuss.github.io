@@ -1,0 +1,253 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+import { projects } from "../data/projects";
+---
+
+<section id="proyectos" class="projects-section">
+  <div class="section-header">
+    <h2 class="section-title">Proyectos</h2>
+    <p class="section-subtitle">
+      Una selección de mis proyectos como Ingeniero de IA.
+    </p>
+  </div>
+
+  <div class="projects-grid" id="projects-grid">
+    {
+      projects.map((project, index) => (
+        <div class={`grid-item ${index >= 3 ? "hidden-card" : ""}`}>
+          <ProjectCard {...project} />
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    projects.length > 3 && (
+      <div class="actions-container">
+        <button
+          id="toggle-projects-btn"
+          class="toggle-btn"
+          aria-expanded="false"
+        >
+          <span class="btn-text">Ver más proyectos</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="btn-icon"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        <a
+          href="https://github.com/soyisuss"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="github-link"
+        >
+          Ver en GitHub
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <>
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </>
+          </svg>
+        </a>
+      </div>
+    )
+  }
+</section>
+
+<script>
+  // Dynamic toggle logic
+  const toggleBtn = document.getElementById("toggle-projects-btn");
+  const hiddenCards = document.querySelectorAll(".hidden-card");
+  let isExpanded = false;
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      isExpanded = !isExpanded;
+
+      hiddenCards.forEach((card) => {
+        if (isExpanded) {
+          card.classList.add("show-card");
+        } else {
+          card.classList.remove("show-card");
+        }
+      });
+
+      // Update button text and icon orientation
+      const btnText = toggleBtn.querySelector(".btn-text");
+      const btnIcon = toggleBtn.querySelector<HTMLElement>(".btn-icon");
+
+      if (btnText && btnIcon) {
+        btnText.textContent = isExpanded ? "Ver menos" : "Ver más proyectos";
+        btnIcon.style.transform = isExpanded
+          ? "rotate(180deg)"
+          : "rotate(0deg)";
+      }
+
+      toggleBtn.setAttribute("aria-expanded", isExpanded.toString());
+
+      // If collapsing, scroll smoothly back to the projects section header
+      if (!isExpanded) {
+        const section = document.getElementById("proyectos");
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    });
+  }
+</script>
+
+<style>
+  .projects-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+
+  .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--accent-violet);
+    border-radius: 99px;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .grid-item {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Handle Hidden Cards smoothly */
+  .hidden-card {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hidden-card.show-card {
+    display: block;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Actions styling */
+  .actions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .actions-container {
+      flex-direction: row;
+      gap: 2rem;
+    }
+  }
+
+  .toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .toggle-btn:hover {
+    color: var(--accent-violet-hover);
+  }
+
+  .btn-icon {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+  }
+
+  .github-link:hover {
+    color: var(--text-primary);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+</style>
