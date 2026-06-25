@@ -1,0 +1,200 @@
+---
+import { technologyCategories } from "../data/technologies";
+---
+
+<section id="tecnologias" class="tech-section">
+  <div class="section-header">
+    <h2 class="section-title">Tecnologías</h2>
+    <p class="section-subtitle">
+      Mi stack tecnológico enfocado en el desarrollo de inteligencia artificial, backend de alto rendimiento y web moderna.
+    </p>
+  </div>
+
+  <div class="categories-grid">
+    {technologyCategories.map((category) => (
+      <div class="category-card">
+        <h3 class="category-title">{category.title}</h3>
+        <p class="category-desc">{category.description}</p>
+        
+        <div class="tech-list">
+          {category.items.map((tech) => (
+            <div class="tech-badge" style={`--hover-color: ${tech.color}`}>
+              <div class="tech-icon">
+                {tech.icon === "python" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c5.522 0 10 4.477 10 10s-4.478 10-10 10S2 17.523 2 12 6.478 2 12 2Z"></path><path d="M12 6v6"></path><path d="M8 10h8"></path></svg>
+                )}
+                {tech.icon === "pytorch" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5Z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                )}
+                {tech.icon === "langchain" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17H5a3 3 0 0 1 0-6h4"></path><path d="M15 7h4a3 3 0 0 1 0 6h-4"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                )}
+                {tech.icon === "llamaindex" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                )}
+                {tech.icon === "opencv" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                )}
+                {tech.icon === "pandas" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                )}
+                {tech.icon === "fastapi" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                )}
+                {tech.icon === "nodejs" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5Z"></path><path d="M12 22L2 17l10-5 10 5-10 5Z"></path><path d="M2 7v10L12 22V12L2 7Z" opacity="0.3"></path></svg>
+                )}
+                {tech.icon === "docker" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="8" x="14" y="14" rx="2"></rect><rect width="8" height="8" x="2" y="14" rx="2"></rect><rect width="8" height="8" x="14" y="2" rx="2"></rect><rect width="8" height="8" x="2" y="2" rx="2"></rect></svg>
+                )}
+                {tech.icon === "postgresql" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path></svg>
+                )}
+                {tech.icon === "mongodb" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 6a6 6 0 0 0-6 6c0 2.22 1.21 4.16 3 5.19L12 22l3-4.81c1.79-1.03 3-2.97 3-5.19a6 6 0 0 0-6-6z" opacity="0.3"></path></svg>
+                )}
+                {tech.icon === "vectordb" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><box x="2" y="2" width="20" height="20" rx="2" ry="2"></box><ellipse cx="12" cy="7" rx="5" ry="2"></ellipse><path d="M7 7v10c0 1.1.9 2 5 2s5-.9 5-2V7"></path><path d="M7 12c0 1.1.9 2 5 2s5-.9 5-2"></path></svg>
+                )}
+                {tech.icon === "astro" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 22 2 22 12 2"></polygon><circle cx="12" cy="14" r="3" opacity="0.4"></circle></svg>
+                )}
+                {tech.icon === "react" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="11" ry="4"></ellipse><ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(60 12 12)"></ellipse><ellipse cx="12" cy="12" rx="11" ry="4" transform="rotate(120 12 12)"></ellipse><circle cx="12" cy="12" r="2"></circle></svg>
+                )}
+                {tech.icon === "typescript" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><path d="M7 8h10"></path><path d="M12 8v8"></path></svg>
+                )}
+                {tech.icon === "git" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 15V9a4 4 0 0 0-4-4H9"></path><line x1="6" y1="9" x2="6" y2="15"></line></svg>
+                )}
+              </div>
+              <span class="tech-name">{tech.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .tech-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 0.75rem;
+  }
+
+  .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--accent-violet);
+    border-radius: 99px;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .category-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .category-card:hover {
+    border-color: rgba(134, 116, 244, 0.2);
+  }
+
+  .category-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .category-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  .tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: auto;
+  }
+
+  .tech-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .tech-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+  }
+
+  /* Dynamic hover styles using custom property --hover-color */
+  .tech-badge:hover {
+    color: var(--text-primary);
+    border-color: var(--hover-color);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05), inset 0 0 8px rgba(255, 255, 255, 0.02);
+    transform: translateY(-2px);
+  }
+
+  .tech-badge:hover .tech-icon {
+    color: var(--hover-color);
+    filter: drop-shadow(0 0 5px var(--hover-color));
+  }
+</style>
