@@ -7,7 +7,10 @@
     <h1 class="hero-title">
       Hola, soy <span class="text-highlight">Yael Caballero</span>
     </h1>
-    <p class="hero-subtitle">Ingeniero en Inteligencia Artificial</p>
+    <p class="hero-subtitle">
+      Ingeniero en Inteligencia Artificial
+      <span class="experience-badge">+6 meses de experiencia</span>
+    </p>
     <p class="hero-desc">
       Desarrollo sistemas de Inteligencia Artificial y agentes autónomos
       orientados a automatizar flujos de trabajo y resolver problemas complejos,
@@ -103,6 +106,23 @@
     color: var(--text-secondary);
     line-height: 1.2;
     max-width: 750px;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .experience-badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-violet-hover);
+    background: rgba(134, 116, 244, 0.08);
+    border: 1px solid rgba(134, 116, 244, 0.25);
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
   }
 
   .hero-desc {
