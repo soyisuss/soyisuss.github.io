@@ -20,7 +20,7 @@ const activeProjects = projects.filter((project) => project.lang === locale);
     {
       activeProjects.map((project, index) => (
         <div class={`grid-item ${index >= 3 ? "hidden-card" : ""}`}>
-          <ProjectCard {...project} />
+          <ProjectCard {...project} index={index} />
         </div>
       ))
     }

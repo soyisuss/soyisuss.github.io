@@ -2,14 +2,20 @@
 interface Props {
   title: string;
   description: string;
+  index?: number;
 }
 
-const { title, description } = Astro.props;
+const { title, description, index } = Astro.props;
+// Format index as 01, 02, etc.
+const formattedIndex = index !== undefined ? String(index + 1).padStart(2, "0") : "";
 ---
 
 <div class="solution-card">
-  <div class="card-icon">
-    <slot name="icon" />
+  <div class="card-header">
+    <div class="card-icon">
+      <slot name="icon" />
+    </div>
+    {formattedIndex && <span class="card-index font-mono">{formattedIndex}</span>}
   </div>
   <h3 class="card-title">{title}</h3>
   <p class="card-desc">
@@ -19,45 +25,92 @@ const { title, description } = Astro.props;
 
 <style>
   .solution-card {
+    position: relative;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
+    border-radius: 16px;
+    padding: 2.25rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1;
+  }
+
+  /* Premium Gradient Border Glow Effect */
+  .solution-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-indigo) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: -1;
   }
 
   .solution-card:hover {
     transform: translateY(-6px);
-    border-color: var(--accent-violet);
-    box-shadow: 0 12px 30px var(--accent-violet-glow);
+    border-color: transparent;
+    box-shadow: 0 12px 30px rgba(134, 116, 244, 0.1);
+  }
+
+  .solution-card:hover::before {
+    opacity: 1;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0.25rem;
   }
 
   .card-icon {
     color: var(--accent-violet);
-    background: rgba(139, 92, 246, 0.05);
-    border: 1px solid rgba(139, 92, 246, 0.1);
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
+    background: rgba(134, 116, 244, 0.04);
+    border: 1px solid rgba(134, 116, 244, 0.1);
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .solution-card:hover .card-icon {
-    background: rgba(139, 92, 246, 0.1);
+    background: rgba(134, 116, 244, 0.1);
     border-color: var(--accent-violet);
-    transform: scale(1.05);
+    color: #ffffff;
+    transform: scale(1.05) rotate(-3deg);
+  }
+
+  .card-index {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+  }
+
+  .solution-card:hover .card-index {
+    color: var(--accent-violet-hover);
+    opacity: 0.85;
   }
 
   .card-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
   .card-desc {

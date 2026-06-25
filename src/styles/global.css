@@ -1,24 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* Colors */
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
-  --bg-card: rgba(18, 18, 18, 0.6);
-  --border-color: rgba(255, 255, 255, 0.08);
+  --bg-primary: #030303;
+  --bg-secondary: #07070a;
+  --bg-card: rgba(12, 12, 16, 0.45);
+  --border-color: rgba(255, 255, 255, 0.05);
+  --border-color-hover: rgba(134, 116, 244, 0.25);
 
   --text-primary: #ffffff;
-  --text-secondary: #d8d8d8;
-  --text-muted: #939393;
+  --text-secondary: #caced6;
+  --text-muted: #797f8c;
 
-  /* Electric Violet Accent */
+  /* Premium Violet & Indigo Accent */
   --accent-violet: #8674f4;
   --accent-violet-hover: #a78bfa;
-  --accent-violet-glow: rgba(139, 92, 246, 0.35);
+  --accent-indigo: #6366f1;
+  --accent-gradient: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-indigo) 100%);
+  --accent-violet-glow: rgba(134, 116, 244, 0.15);
+  --accent-indigo-glow: rgba(99, 102, 241, 0.15);
 
   /* Fonts */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   --font-heading: 'Plus Jakarta Sans', var(--font-sans);
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, Monaco, monospace;
 }
 
 /* Reset */
@@ -34,16 +39,51 @@ html {
   scroll-behavior: smooth;
   color-scheme: dark;
   scroll-padding-top: 100px; /* Offset for the fixed navbar */
+  background-color: var(--bg-primary);
 }
 
 body {
   background-color: var(--bg-primary);
+  /* Elegant background grid pattern */
+  background-image: radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 28px 28px;
   color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Ambient Cursor Glow Effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(134, 116, 244, 0.05),
+    rgba(99, 102, 241, 0.02) 40%,
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+body.mouse-active::before {
+  opacity: 1;
+}
+
+/* Ensure other elements render above grid and ambient lights */
+header, main, footer {
+  position: relative;
+  z-index: 2;
 }
 
 /* Headings */
@@ -56,20 +96,27 @@ h6 {
   font-family: var(--font-heading);
   color: var(--text-primary);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 /* Links */
 a {
   color: inherit;
   text-decoration: none;
-  transition: color 0.2s ease, opacity 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Utilities */
 .text-highlight {
-  color: var(--accent-violet);
-  text-shadow: 0 0 15px var(--accent-violet-glow);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none; /* Let the gradient speak */
+}
+
+.font-mono {
+  font-family: var(--font-mono);
 }
 
 .container {
@@ -81,6 +128,22 @@ a {
 
 /* Selection color */
 ::selection {
-  background-color: var(--accent-violet);
+  background-color: rgba(134, 116, 244, 0.3);
   color: var(--text-primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  border: 2px solid var(--bg-primary);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(134, 116, 244, 0.4);
 }

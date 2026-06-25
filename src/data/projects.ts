@@ -14,33 +14,35 @@ export const projects: Project[] = [
   {
     title: "Emova",
     description: "Sistema de Apoyo al Análisis Emocional en Pruebas de Usabilidad, el sistema permite capturar y analizar las reacciones emocionales espontáneas de los usuarios durante la interacción con sitios web, complementando las técnicas tradicionales de usabilidad como encuestas y entrevistas.",
+    image: "/projects/emova.png",
     tags: ["Python", "Pytorch", "CNN", "FastAPI", "MongoDB", "OpenCV"],
     githubUrl: "https://github.com/soyisuss/emova",
     status: "completed",
     lang: "es"
   },
   {
-    title: "Agente de Análisis de Datos SQL",
-    description: "Agente inteligente capaz de traducir consultas en lenguaje natural a código SQL ejecutable, graficar resultados automáticamente y realizar un análisis cuantitativo de la base de datos.",
-    tags: ["Python", "LlamaIndex", "PostgreSQL", "Pandas", "Streamlit"],
-    githubUrl: "https://github.com/soyisuss",
+    title: "Ciceron",
+    description: "Sistema RAG Agentico para el apoyo en la creación de discursos y oratoria, permite crearlos o mejorarlos basado en información de expertos mediante un MCP. Presente en todo el flujo, desde la extración de información, vecotorización y consumo mediante un Agente.",
+    tags: ["Python", "MCP", "Go", "Google Cloud", "Agente", "Qdrant", "Embeddings", "Docker"],
+    githubUrl: "https://github.com/soyisuss/ciceron",
     status: "in-progress",
     lang: "es"
   },
-  
+
   // English Projects
   {
     title: "Emova",
-    description: "Emotional Analysis Support System in Usability Testing. The system captures and analyzes spontaneous emotional reactions of users during website interactions, complementing traditional usability techniques such as surveys and interviews.",
+    description: "Agentic RAG System for supporting speechwriting and public speaking. It allows creating or improving them based on expert information through an MCP. Present throughout the entire pipeline, from information extraction and vectorization to consumption by an Agent.",
+    image: "/projects/emova.png",
     tags: ["Python", "Pytorch", "CNN", "FastAPI", "MongoDB", "OpenCV"],
     githubUrl: "https://github.com/soyisuss/emova",
     status: "completed",
     lang: "en"
   },
   {
-    title: "SQL Data Analysis Agent",
+    title: "Ciceron",
     description: "Intelligent agent capable of translating natural language queries into executable SQL code, automatically plotting results, and performing quantitative database analysis.",
-    tags: ["Python", "LlamaIndex", "PostgreSQL", "Pandas", "Streamlit"],
+    tags: ["Python", "MCP", "Go", "Google Cloud", "Agent", "Qdrant", "Embeddings", "Docker"],
     githubUrl: "https://github.com/soyisuss",
     status: "in-progress",
     lang: "en"

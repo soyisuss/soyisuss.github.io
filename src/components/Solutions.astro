@@ -12,8 +12,8 @@ const activeSolutions = solutions.filter((solution) => solution.lang === locale)
   <h2 class="section-title">{t["solutions.title"]}</h2>
   <div class="solutions-grid">
     {
-      activeSolutions.map((solution) => (
-        <SolutionCard title={solution.title} description={solution.description}>
+      activeSolutions.map((solution, index) => (
+        <SolutionCard title={solution.title} description={solution.description} index={index}>
           {solution.icon === "ai" && (
             <svg
               slot="icon"

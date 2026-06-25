@@ -7,7 +7,7 @@ const isEs = locale === "es";
 
 <header class="navbar">
   <div class="navbar-container">
-    <a href="#" class="nav-logo">
+    <a href="#" class="nav-logo" aria-label="Logo Home">
       <img src="/logo.svg" alt="Yael Caballero" class="logo-image" />
     </a>
     <nav class="nav-menu">
@@ -17,8 +17,8 @@ const isEs = locale === "es";
       <a href="#contacto" class="nav-link">{t["nav.contact"]}</a>
       
       <div class="lang-selector">
+        <div class={`lang-slider ${isEs ? 'slide-es' : 'slide-en'}`}></div>
         <a href="/" class={`lang-btn ${!isEs ? 'active' : ''}`} data-lang="en">EN</a>
-        <span class="lang-divider">|</span>
         <a href="/es" class={`lang-btn ${isEs ? 'active' : ''}`} data-lang="es">ES</a>
       </div>
     </nav>
@@ -36,29 +36,85 @@ const isEs = locale === "es";
       }
     });
   });
+
+  // Global mouse coordinates tracking for cursor glow effect
+  let ticking = false;
+
+  const updateMouseGlow = (e: MouseEvent) => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
+        document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  };
+
+  document.body.classList.add('mouse-active');
+  window.addEventListener('mousemove', updateMouseGlow);
+
+  window.addEventListener('mouseenter', () => {
+    document.body.classList.add('mouse-active');
+  });
+
+  window.addEventListener('mouseleave', () => {
+    document.body.classList.remove('mouse-active');
+  });
+
+  // Active navigation link highlighting on scroll
+  const navLinks = document.querySelectorAll(".nav-link");
+  const sections = document.querySelectorAll("section");
+
+  const highlightNav = () => {
+    let scrollPos = window.scrollY + 120;
+    
+    sections.forEach((section) => {
+      const id = section.getAttribute("id");
+      if (!id) return;
+      
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+
+      if (scrollPos >= top && scrollPos < top + height) {
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${id}`) {
+            link.classList.add("active");
+          }
+        });
+      }
+    });
+  };
+
+  window.addEventListener("scroll", highlightNav);
+  window.addEventListener("load", highlightNav);
 </script>
 
 <style>
   .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-color);
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 3rem);
+    max-width: 900px;
+    height: 64px;
+    background: rgba(10, 10, 12, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 99px;
     z-index: 1000;
     display: flex;
     align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .navbar-container {
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 1.25rem 0 0.75rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -70,48 +126,102 @@ const isEs = locale === "es";
   }
 
   .logo-image {
-    height: 55px;
-    width: 55px; /* Explicit width to prevent collapse */
+    height: 48px;
+    width: 48px;
     display: block;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .logo-image:hover {
-    transform: scale(1.08);
+    transform: scale(1.08) rotate(5deg);
   }
 
   .nav-menu {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.75rem;
   }
 
   .nav-link {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 500;
     color: var(--text-secondary);
+    position: relative;
+    padding: 0.25rem 0;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 12px;
+    height: 2px;
+    background: var(--accent-gradient);
+    border-radius: 99px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .nav-link:hover {
     color: var(--text-primary);
   }
 
+  .nav-link.active {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .nav-link.active::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
   /* Language Selector Styles */
   .lang-selector {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    border-left: 1px solid var(--border-color);
-    padding-left: 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 99px;
+    padding: 2px;
+    height: 32px;
     margin-left: 0.5rem;
   }
 
+  .lang-slider {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    width: 32px;
+    background: var(--accent-gradient);
+    border-radius: 99px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px var(--accent-violet-glow);
+    z-index: 1;
+  }
+
+  .lang-slider.slide-en {
+    transform: translateX(0);
+  }
+
+  .lang-slider.slide-es {
+    transform: translateX(32px);
+  }
+
   .lang-btn {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 28px;
+    font-size: 0.75rem;
+    font-weight: 600;
     color: var(--text-muted);
-    transition: color 0.2s ease;
+    transition: color 0.3s ease;
   }
 
   .lang-btn:hover {
@@ -119,12 +229,32 @@ const isEs = locale === "es";
   }
 
   .lang-btn.active {
-    color: var(--accent-violet-hover);
-    text-shadow: 0 0 10px rgba(134, 116, 244, 0.3);
+    color: #ffffff;
   }
 
-  .lang-divider {
-    opacity: 0.3;
-    font-size: 0.75rem;
+  @media (max-width: 640px) {
+    .navbar {
+      top: 1rem;
+      width: calc(100% - 1.5rem);
+      height: 56px;
+    }
+    
+    .logo-image {
+      height: 40px;
+      width: 40px;
+    }
+
+    .nav-menu {
+      gap: 1rem;
+    }
+
+    .nav-link {
+      font-size: 0.8rem;
+    }
+
+    .lang-selector {
+      margin-left: 0.25rem;
+    }
   }
 </style>
+

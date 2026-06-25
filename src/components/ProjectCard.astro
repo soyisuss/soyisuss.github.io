@@ -9,6 +9,7 @@ interface Props {
   githubUrl?: string;
   liveUrl?: string;
   status?: "completed" | "in-progress" | "upcoming";
+  index?: number;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   githubUrl,
   liveUrl,
   status = "completed",
+  index,
 } = Astro.props;
 
 const locale = Astro.currentLocale || "en";
@@ -37,6 +39,7 @@ const getStatusBadge = (status: string) => {
 };
 
 const badge = getStatusBadge(status);
+const formattedIndex = index !== undefined ? String(index + 1).padStart(2, "0") : "";
 ---
 
 <div class={`project-card ${status !== "completed" ? "card-dimmed" : ""}`}>
@@ -73,6 +76,7 @@ const badge = getStatusBadge(status);
   <div class="card-content">
     <div class="card-header">
       <h3 class="project-title">{title}</h3>
+      {formattedIndex && <span class="project-index font-mono">{formattedIndex}</span>}
     </div>
 
     <p class="project-desc">{description}</p>
@@ -147,21 +151,45 @@ const badge = getStatusBadge(status);
 
 <style>
   .project-card {
+    position: relative;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 18px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     height: 100%;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1;
+  }
+
+  /* Premium border glow effect */
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--accent-indigo) 0%, var(--accent-violet) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: -1;
   }
 
   .project-card:hover {
     transform: translateY(-6px);
-    border-color: var(--accent-violet);
-    box-shadow: 0 12px 30px var(--accent-violet-glow);
+    border-color: transparent;
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.1);
+  }
+
+  .project-card:hover::before {
+    opacity: 1;
   }
 
   .card-dimmed {
@@ -179,84 +207,98 @@ const badge = getStatusBadge(status);
     width: 100%;
     height: 200px;
     overflow: hidden;
-    background: #0a0a0a;
+    background: #08080b;
+    border-bottom: 1px solid var(--border-color);
   }
 
   .project-image {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .project-card:hover .project-image {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 
+  /* Premium Gradient Placeholder */
   .project-gradient-placeholder {
     width: 100%;
     height: 100%;
     background: linear-gradient(
       135deg,
-      rgba(134, 116, 244, 0.1) 0%,
-      rgba(10, 10, 10, 0.8) 100%
+      rgba(134, 116, 244, 0.12) 0%,
+      rgba(99, 102, 241, 0.05) 50%,
+      #08080c 100%
     );
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-violet);
-    transition: background 0.3s ease;
+    color: var(--accent-violet-hover);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .project-card:hover .project-gradient-placeholder {
     background: linear-gradient(
       135deg,
-      rgba(134, 116, 244, 0.15) 0%,
-      rgba(10, 10, 10, 0.6) 100%
+      rgba(134, 116, 244, 0.18) 0%,
+      rgba(99, 102, 241, 0.08) 50%,
+      #050508 100%
     );
   }
 
   .placeholder-icon {
-    opacity: 0.6;
-    transition:
-      transform 0.3s ease,
-      opacity 0.3s ease;
+    opacity: 0.5;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .project-card:hover .placeholder-icon {
-    transform: scale(1.1);
-    opacity: 1;
+    transform: scale(1.12) rotate(45deg);
+    opacity: 0.95;
+    color: #ffffff;
+    filter: drop-shadow(0 0 8px var(--accent-violet-glow));
   }
 
+  /* Status badge */
   .status-badge {
     position: absolute;
     top: 1rem;
     right: 1rem;
     padding: 0.35rem 0.75rem;
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
     font-weight: 600;
     border-radius: 99px;
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .badge-progress {
-    background: rgba(245, 158, 11, 0.15);
+    background: rgba(245, 158, 11, 0.12);
     color: #fbbf24;
-    border-color: rgba(245, 158, 11, 0.3);
+    border-color: rgba(245, 158, 11, 0.25);
   }
 
   .badge-upcoming {
-    background: rgba(134, 116, 244, 0.15);
+    background: rgba(134, 116, 244, 0.12);
     color: var(--accent-violet-hover);
-    border-color: rgba(134, 116, 244, 0.3);
+    border-color: rgba(134, 116, 244, 0.25);
   }
 
   .card-content {
-    padding: 1.5rem;
+    padding: 1.75rem 1.5rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    gap: 1.15rem;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
     gap: 1rem;
   }
 
@@ -268,11 +310,25 @@ const badge = getStatusBadge(status);
   }
 
   .project-card:hover .project-title {
-    color: var(--accent-violet);
+    color: var(--accent-violet-hover);
+  }
+
+  .project-index {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    margin-top: 0.2rem;
+  }
+
+  .project-card:hover .project-index {
+    color: var(--accent-violet-hover);
+    opacity: 0.85;
   }
 
   .project-desc {
-    font-size: 0.95rem;
+    font-size: 0.925rem;
     color: var(--text-secondary);
     line-height: 1.6;
     flex-grow: 1;
@@ -282,23 +338,24 @@ const badge = getStatusBadge(status);
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
   }
 
   .tag {
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
     font-weight: 500;
-    background: rgba(255, 255, 255, 0.03);
-    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-secondary);
     padding: 0.25rem 0.6rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .project-card:hover .tag {
     border-color: rgba(134, 116, 244, 0.2);
-    color: var(--text-secondary);
+    color: var(--accent-violet-hover);
     background: rgba(134, 116, 244, 0.02);
   }
 
@@ -307,7 +364,7 @@ const badge = getStatusBadge(status);
     gap: 0.75rem;
     margin-top: 0.5rem;
     border-top: 1px solid var(--border-color);
-    padding-top: 1rem;
+    padding-top: 1.25rem;
   }
 
   .link-btn {
@@ -315,32 +372,33 @@ const badge = getStatusBadge(status);
     align-items: center;
     gap: 0.5rem;
     font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
+    font-weight: 600;
+    padding: 0.55rem 1.1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: var(--text-secondary);
-    background: transparent;
-    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.01);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
   }
 
   .link-btn:hover {
-    color: var(--text-primary);
-    border-color: var(--accent-violet);
-    background: rgba(134, 116, 244, 0.05);
+    color: #ffffff;
+    border-color: rgba(134, 116, 244, 0.3);
+    background: rgba(134, 116, 244, 0.06);
+    transform: translateY(-1px);
   }
 
   .demo-btn {
     background: rgba(134, 116, 244, 0.1);
-    border-color: rgba(134, 116, 244, 0.2);
+    border-color: rgba(134, 116, 244, 0.25);
     color: var(--accent-violet-hover);
   }
 
   .demo-btn:hover {
-    background: var(--accent-violet);
+    background: var(--accent-gradient);
     color: #ffffff;
-    border-color: var(--accent-violet);
-    box-shadow: 0 4px 12px rgba(134, 116, 244, 0.2);
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(134, 116, 244, 0.3);
   }
 </style>
