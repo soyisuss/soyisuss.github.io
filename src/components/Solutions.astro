@@ -1,13 +1,18 @@
 ---
 import SolutionCard from "./SolutionCard.astro";
 import { solutions } from "../data/solutions";
+import { translations } from "../data/translations";
+
+const locale = Astro.currentLocale || "en";
+const t = translations[locale as keyof typeof translations];
+const activeSolutions = solutions.filter((solution) => solution.lang === locale);
 ---
 
 <section id="soluciones" class="solutions-section">
-  <h2 class="section-title">Enfoque</h2>
+  <h2 class="section-title">{t["solutions.title"]}</h2>
   <div class="solutions-grid">
     {
-      solutions.map((solution) => (
+      activeSolutions.map((solution) => (
         <SolutionCard title={solution.title} description={solution.description}>
           {solution.icon === "ai" && (
             <svg

@@ -1,4 +1,6 @@
 ---
+import { translations } from "../data/translations";
+
 interface Props {
   title: string;
   description: string;
@@ -19,13 +21,16 @@ const {
   status = "completed",
 } = Astro.props;
 
+const locale = Astro.currentLocale || "en";
+const t = translations[locale as keyof typeof translations];
+
 // Helper to determine badge text and styling
 const getStatusBadge = (status: string) => {
   switch (status) {
     case "in-progress":
-      return { text: "En desarrollo", class: "badge-progress" };
+      return { text: t["projectCard.progress"], class: "badge-progress" };
     case "upcoming":
-      return { text: "Próximamente", class: "badge-upcoming" };
+      return { text: t["projectCard.upcoming"], class: "badge-upcoming" };
     default:
       return null;
   }
@@ -102,7 +107,7 @@ const badge = getStatusBadge(status);
                 <path d="M9 18c-4.51 2-5-2-7-2" />
               </>
             </svg>
-            Código
+            {t["projectCard.code"]}
           </a>
         )
       }
@@ -132,7 +137,7 @@ const badge = getStatusBadge(status);
                 <line x1="10" y1="14" x2="21" y2="3" />
               </>
             </svg>
-            Demo
+            {t["projectCard.demo"]}
           </a>
         )
       }

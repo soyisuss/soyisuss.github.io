@@ -1,0 +1,49 @@
+---
+import "../../styles/global.css";
+import Navbar from "../../components/Navbar.astro";
+import Hero from "../../components/Hero.astro";
+import Solutions from "../../components/Solutions.astro";
+import Projects from "../../components/Projects.astro";
+import Technologies from "../../components/Technologies.astro";
+import Contact from "../../components/Contact.astro";
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Yael Caballero | AI Engineer</title>
+  </head>
+  <body>
+    <Navbar />
+
+    <main class="portfolio-container">
+      <Hero />
+      <Solutions />
+      <Projects />
+      <Technologies />
+      <Contact />
+    </main>
+  </body>
+</html>
+
+<style>
+  .portfolio-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10rem 2rem 6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  @media (max-width: 600px) {
+    .portfolio-container {
+      padding: 8rem 1.25rem 4rem 1.25rem;
+      gap: 6rem;
+    }
+  }
+</style>

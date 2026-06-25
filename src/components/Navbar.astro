@@ -1,5 +1,8 @@
 ---
-
+import { translations } from "../data/translations";
+const locale = Astro.currentLocale || "en";
+const t = translations[locale as keyof typeof translations];
+const isEs = locale === "es";
 ---
 
 <header class="navbar">
@@ -8,13 +11,32 @@
       <img src="/logo.svg" alt="Yael Caballero" class="logo-image" />
     </a>
     <nav class="nav-menu">
-      <a href="#inicio" class="nav-link">Inicio</a>
-      <a href="#proyectos" class="nav-link">Proyectos</a>
-      <a href="#tecnologias" class="nav-link">Tecnologías</a>
-      <a href="#contacto" class="nav-link">Contacto</a>
+      <a href="#inicio" class="nav-link">{t["nav.start"]}</a>
+      <a href="#proyectos" class="nav-link">{t["nav.projects"]}</a>
+      <a href="#tecnologias" class="nav-link">{t["nav.tech"]}</a>
+      <a href="#contacto" class="nav-link">{t["nav.contact"]}</a>
+      
+      <div class="lang-selector">
+        <a href="/" class={`lang-btn ${!isEs ? 'active' : ''}`} data-lang="en">EN</a>
+        <span class="lang-divider">|</span>
+        <a href="/es" class={`lang-btn ${isEs ? 'active' : ''}`} data-lang="es">ES</a>
+      </div>
     </nav>
   </div>
 </header>
+
+<script>
+  // Save language preference on click
+  const langBtns = document.querySelectorAll(".lang-btn");
+  langBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const lang = btn.getAttribute("data-lang");
+      if (lang) {
+        localStorage.setItem("preferred-lang", lang);
+      }
+    });
+  });
+</script>
 
 <style>
   .navbar {
@@ -72,5 +94,37 @@
 
   .nav-link:hover {
     color: var(--text-primary);
+  }
+
+  /* Language Selector Styles */
+  .lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-left: 1px solid var(--border-color);
+    padding-left: 1.25rem;
+    margin-left: 0.5rem;
+  }
+
+  .lang-btn {
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+  }
+
+  .lang-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .lang-btn.active {
+    color: var(--accent-violet-hover);
+    text-shadow: 0 0 10px rgba(134, 116, 244, 0.3);
+  }
+
+  .lang-divider {
+    opacity: 0.3;
+    font-size: 0.75rem;
   }
 </style>

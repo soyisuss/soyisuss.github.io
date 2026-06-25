@@ -1,20 +1,20 @@
 ---
-
+import { translations } from "../data/translations";
+const locale = Astro.currentLocale || "en";
+const t = translations[locale as keyof typeof translations];
 ---
 
 <section id="inicio" class="hero-section">
   <div class="hero-content">
     <h1 class="hero-title">
-      Hola, soy <span class="text-highlight">Yael Caballero</span>
+      {t["hero.greeting"]} <span class="text-highlight">Yael Caballero</span>
     </h1>
     <p class="hero-subtitle">
-      Ingeniero en Inteligencia Artificial
-      <span class="experience-badge">+6 meses de experiencia</span>
+      {t["hero.subtitle"]}
+      <span class="experience-badge">{t["hero.experience"]}</span>
     </p>
     <p class="hero-desc">
-      Desarrollo sistemas de Inteligencia Artificial y agentes autónomos
-      orientados a automatizar flujos de trabajo y resolver problemas complejos,
-      aportando conocimiento durante todo el ciclo de vida del proyecto.
+      {t["hero.desc"]}
     </p>
 
     <div class="social-links">

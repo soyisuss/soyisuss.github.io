@@ -1,17 +1,22 @@
 ---
 import { technologyCategories } from "../data/technologies";
+import { translations } from "../data/translations";
+
+const locale = Astro.currentLocale || "en";
+const t = translations[locale as keyof typeof translations];
+const activeCategories = technologyCategories.filter((cat) => cat.lang === locale);
 ---
 
 <section id="tecnologias" class="tech-section">
   <div class="section-header">
-    <h2 class="section-title">Tecnologías</h2>
+    <h2 class="section-title">{t["tech.title"]}</h2>
     <p class="section-subtitle">
-      Mi stack tecnológico enfocado en el desarrollo de inteligencia artificial, backend de alto rendimiento y web moderna.
+      {t["tech.subtitle"]}
     </p>
   </div>
 
   <div class="categories-grid">
-    {technologyCategories.map((category) => (
+    {activeCategories.map((category) => (
       <div class="category-card">
         <h3 class="category-title">{category.title}</h3>
         <p class="category-desc">{category.description}</p>

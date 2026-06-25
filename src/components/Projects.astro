@@ -1,19 +1,24 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
 import { projects } from "../data/projects";
+import { translations } from "../data/translations";
+
+const locale = Astro.currentLocale || "en";
+const t = translations[locale as keyof typeof translations];
+const activeProjects = projects.filter((project) => project.lang === locale);
 ---
 
 <section id="proyectos" class="projects-section">
   <div class="section-header">
-    <h2 class="section-title">Proyectos</h2>
+    <h2 class="section-title">{t["projects.title"]}</h2>
     <p class="section-subtitle">
-      Una selección de mis proyectos como Ingeniero de IA.
+      {t["projects.subtitle"]}
     </p>
   </div>
 
   <div class="projects-grid" id="projects-grid">
     {
-      projects.map((project, index) => (
+      activeProjects.map((project, index) => (
         <div class={`grid-item ${index >= 3 ? "hidden-card" : ""}`}>
           <ProjectCard {...project} />
         </div>
@@ -22,14 +27,16 @@ import { projects } from "../data/projects";
   </div>
 
   {
-    projects.length > 3 && (
+    activeProjects.length > 3 && (
       <div class="actions-container">
         <button
           id="toggle-projects-btn"
           class="toggle-btn"
           aria-expanded="false"
+          data-text-more={t["projects.viewMore"]}
+          data-text-less={t["projects.viewLess"]}
         >
-          <span class="btn-text">Ver más proyectos</span>
+          <span class="btn-text">{t["projects.viewMore"]}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -52,7 +59,7 @@ import { projects } from "../data/projects";
           rel="noopener noreferrer"
           class="github-link"
         >
-          Ver en GitHub
+          {t["projects.viewGithub"]}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -97,12 +104,12 @@ import { projects } from "../data/projects";
       // Update button text and icon orientation
       const btnText = toggleBtn.querySelector(".btn-text");
       const btnIcon = toggleBtn.querySelector<HTMLElement>(".btn-icon");
+      const textMore = toggleBtn.getAttribute("data-text-more") || "View more";
+      const textLess = toggleBtn.getAttribute("data-text-less") || "View less";
 
       if (btnText && btnIcon) {
-        btnText.textContent = isExpanded ? "Ver menos" : "Ver más proyectos";
-        btnIcon.style.transform = isExpanded
-          ? "rotate(180deg)"
-          : "rotate(0deg)";
+        btnText.textContent = isExpanded ? textLess : textMore;
+        btnIcon.style.transform = isExpanded ? "rotate(180deg)" : "rotate(0deg)";
       }
 
       toggleBtn.setAttribute("aria-expanded", isExpanded.toString());

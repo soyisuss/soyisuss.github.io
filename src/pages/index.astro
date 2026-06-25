@@ -8,7 +8,7 @@ import Technologies from "../components/Technologies.astro";
 import Contact from "../components/Contact.astro";
 ---
 
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
@@ -16,6 +16,22 @@ import Contact from "../components/Contact.astro";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Yael Caballero | AI Engineer</title>
+    
+    <script is:inline>
+      // Detect browser language and redirect to /es if Spanish is preferred
+      const pathname = window.location.pathname;
+      if (pathname === "/" || pathname === "/index.html") {
+        const userPref = localStorage.getItem("preferred-lang");
+        if (userPref === "es") {
+          window.location.replace("/es");
+        } else if (!userPref) {
+          const browserLang = navigator.language || window.navigator.userLanguage;
+          if (browserLang && browserLang.startsWith("es")) {
+            window.location.replace("/es");
+          }
+        }
+      }
+    </script>
   </head>
   <body>
     <Navbar />

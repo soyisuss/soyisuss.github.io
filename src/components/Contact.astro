@@ -1,14 +1,19 @@
 ---
+import { translations } from "../data/translations";
+
 const email = "yisusscc@gmail.com";
 const linkedinUrl = "https://linkedin.com/in/caballeroyael";
 const githubUrl = "https://github.com/soyisuss";
+
+const locale = Astro.currentLocale || "en";
+const t = translations[locale as keyof typeof translations];
 ---
 
 <section id="contacto" class="contact-section">
   <div class="section-header">
-    <h2 class="section-title">Contacto</h2>
+    <h2 class="section-title">{t["contact.title"]}</h2>
     <p class="section-subtitle">
-      ¿Tienes algún proyecto en mente, buscas incorporar talento de IA o simplemente quieres conectar? Hablemos.
+      {t["contact.subtitle"]}
     </p>
   </div>
 
@@ -17,21 +22,21 @@ const githubUrl = "https://github.com/soyisuss";
     <div class="status-card">
       <div class="status-indicator">
         <span class="pulse-dot"></span>
-        <span class="status-text">Disponible para ofertas y proyectos</span>
+        <span class="status-text">{t["contact.status"]}</span>
       </div>
-      <h3 class="status-title">Trabajemos juntos</h3>
+      <h3 class="status-title">{t["contact.cta"]}</h3>
       <p class="status-desc">
-        Actualmente estoy abierto a nuevas oportunidades como Ingeniero de IA, desarrollador de agentes autónomos y proyectos freelance. 
+        {t["contact.desc"]}
       </p>
       
       <div class="info-list">
         <div class="info-item">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          <span>Estado de México (Abierto a remoto o presencial)</span>
+          <span>{t["contact.location"]}</span>
         </div>
         <div class="info-item">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="info-icon"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          <span>Zona horaria: GMT-6 (CST)</span>
+          <span>{t["contact.timezone"]}</span>
         </div>
       </div>
     </div>
@@ -44,16 +49,23 @@ const githubUrl = "https://github.com/soyisuss";
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
         </div>
         <div class="method-info">
-          <span class="method-label">Correo Electrónico</span>
+          <span class="method-label">{t["contact.email"]}</span>
           <span class="method-value" id="email-value">{email}</span>
         </div>
         <div class="method-actions">
           <a href={`mailto:${email}`} class="action-btn email-send-btn" aria-label="Enviar correo electrónico">
-            Enviar
+            {t["contact.send"]}
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </a>
-          <button class="action-btn copy-btn" id="copy-email-btn" data-email={email} aria-label="Copiar correo al portapapeles">
-            <span class="copy-btn-text">Copiar</span>
+          <button 
+            class="action-btn copy-btn" 
+            id="copy-email-btn" 
+            data-email={email} 
+            data-text-copy={t["contact.copy"]}
+            data-text-copied={t["contact.copied"]}
+            aria-label="Copiar correo al portapapeles"
+          >
+            <span class="copy-btn-text">{t["contact.copy"]}</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
           </button>
         </div>
@@ -96,12 +108,15 @@ const githubUrl = "https://github.com/soyisuss";
   if (copyBtn) {
     copyBtn.addEventListener("click", () => {
       const email = copyBtn.getAttribute("data-email");
+      const textCopy = copyBtn.getAttribute("data-text-copy") || "Copy";
+      const textCopied = copyBtn.getAttribute("data-text-copied") || "Copied!";
+      
       if (email) {
         navigator.clipboard.writeText(email).then(() => {
           const btnText = copyBtn.querySelector(".copy-btn-text");
           const copyIcon = copyBtn.querySelector(".copy-icon");
           
-          if (btnText) btnText.textContent = "¡Copiado!";
+          if (btnText) btnText.textContent = textCopied;
           if (copyIcon) {
             // Success checkmark SVG change
             copyIcon.innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
@@ -110,7 +125,7 @@ const githubUrl = "https://github.com/soyisuss";
           copyBtn.classList.add("copied");
 
           setTimeout(() => {
-            if (btnText) btnText.textContent = "Copiar";
+            if (btnText) btnText.textContent = textCopy;
             if (copyIcon) {
               copyIcon.innerHTML = '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>';
             }
